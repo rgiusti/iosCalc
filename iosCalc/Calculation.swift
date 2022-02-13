@@ -24,8 +24,6 @@ enum Operation: String {
 }
 
 struct Calculation {
-    let shortFormat = NumberFormatter()
-    let longFormat = NumberFormatter()
     var x: Float = 0
     var y: Float!
     var result: Float!
@@ -33,27 +31,16 @@ struct Calculation {
     var inputState = InputState.initial
     var calcState = CalculationState.initial
     
-    init() {
-        shortFormat.maximumFractionDigits = 4
-        longFormat.maximumFractionDigits = 6
-    }
-    
     func description() -> String {
-        return String(format: "%@ %@ %@ = %@",
-                      shortFormat.string(for: x)!,
-                      operation.rawValue,
-                      shortFormat.string(for: y)!,
-                      shortFormat.string(for: result)!)
+        return String(format: "%g %@ %g = %g",x,operation.rawValue,y,result)
     }
     
     func partialDescription() -> String {
-        return String(format: "%@ %@ ? = ?",
-                      shortFormat.string(for: x)!,
-                      operation.rawValue)
+        return String(format: "%g %@ ? = ?",x,operation.rawValue)
     }
     
     func resultString() -> String {
-        return longFormat.string(for: result) ?? "NaN"
+        return String(format: "%g", result)
     }
     
     mutating  func performOperation() {

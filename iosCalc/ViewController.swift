@@ -10,7 +10,6 @@ import UIKit
 class ViewController: UIViewController {
     
     var currentCalculation = Calculation()
-    let floatFormatter = NumberFormatter()
     
     @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var lastCalculationLabel: UILabel!
@@ -118,7 +117,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        floatFormatter.maximumFractionDigits = 10
     }
 
 
