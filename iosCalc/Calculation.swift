@@ -34,29 +34,30 @@ struct Calculation {
     var calcState = CalculationState.initial
     
     init() {
-        shortFormat.maximumFractionDigits = 10
-        longFormat.maximumFractionDigits = 100
+        shortFormat.maximumFractionDigits = 4
+        longFormat.maximumFractionDigits = 6
     }
     
     func description() -> String {
         return String(format: "%@ %@ %@ = %@",
-                      shortFormat.string(from: NSNumber(value:x))!,
+                      shortFormat.string(for: x)!,
                       operation.rawValue,
-                      shortFormat.string(from: NSNumber(value:y))!,
-                      shortFormat.string(from: NSNumber(value:result))!)
+                      shortFormat.string(for: y)!,
+                      shortFormat.string(for: result)!)
     }
     
     func partialDescription() -> String {
         return String(format: "%@ %@ ? = ?",
-                      shortFormat.string(from: NSNumber(value:x))!,
+                      shortFormat.string(for: x)!,
                       operation.rawValue)
     }
     
     func resultString() -> String {
-        return longFormat.string(from: NSNumber(value:result)) ?? "NaN"
+        return longFormat.string(for: result) ?? "NaN"
     }
     
     mutating  func performOperation() {
+        print("x:",x," y:",y!)
         switch operation {
         case .add:
              result = x + y
@@ -69,5 +70,6 @@ struct Calculation {
         default:
             result = 0
         }
+        print("result:",result!)
     }
 }

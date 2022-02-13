@@ -82,6 +82,7 @@ class ViewController: UIViewController {
             currentCalculation.operation = Operation(rawValue: sender.currentTitle!)!
 
             currentCalculation.x = Float(resultLabel.text!)!
+            print("currentCalculation.x:",currentCalculation.x)
             currentCalculation.calcState = .xEntered
             
             currentCalculation.inputState = .cleared
@@ -98,9 +99,9 @@ class ViewController: UIViewController {
     
         if currentCalculation.calcState != .operationPerformed {
             currentCalculation.y = Float(resultLabel.text!)!
+            print("currentCalculation.y:",currentCalculation.y!)
         }
     
-        //currentCalculation.result = performCalculation(for: currentCalculation)
         currentCalculation.performOperation()
         resultLabel.text = currentCalculation.resultString()
         
@@ -119,27 +120,6 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         floatFormatter.maximumFractionDigits = 10
     }
-    
-    func performCalculation(for calc: Calculation = Calculation()) -> Float {
-        var r: Float
-        
-        switch calc.operation {
-        case .add:
-             r = calc.x + calc.y
-        case .substract:
-             r = calc.x - calc.y
-        case .multiply:
-             r = calc.x * calc.y
-        case .divide:
-             r = calc.x / calc.y
-        default:
-            r = 0
-        }
-        
-        return r;
-        
-    }
-    
 
 
 }
