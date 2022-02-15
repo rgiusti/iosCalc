@@ -55,7 +55,19 @@ class ViewController: UIViewController {
             currentCalculation = Calculation()
             calculationsHistoryTxtView.text = ""
             dynamicClear.setTitle("AC", for: .normal)
+        case "%":
+            calculationsHistoryTxtView.text += "\n% Not Fully Implemented, 😆 not sure how % works on calculator 😁"
             
+            guard let safeInput = Float(resultLabel.text!) else {
+                resultLabel.text = "NaN"
+                return
+            }
+            
+            let pctInput = safeInput / 100
+            
+            resultLabel.text = String(format: "%g", pctInput)
+            
+            break
         default:
             resultLabel.text! += sender.currentTitle!
         }
@@ -79,14 +91,16 @@ class ViewController: UIViewController {
         if currentCalculation.calcState != .xEntered {
             
             currentCalculation.operation = Operation(rawValue: sender.currentTitle!)!
-
-            currentCalculation.x = Float(resultLabel.text!)!
+            
+            guard let safeX = Float(resultLabel.text!) else {
+                resultLabel.text = "NaN"
+                return
+            }
+            currentCalculation.x = safeX
             print("currentCalculation.x:",currentCalculation.x)
             currentCalculation.calcState = .xEntered
-            
             currentCalculation.inputState = .cleared
             lastCalculationLabel.text = currentCalculation.partialDescription()
-
         }else{
             equalPressed(sender)
             operationPressed(sender)
@@ -110,7 +124,11 @@ class ViewController: UIViewController {
         
         calculationsHistoryTxtView.text = String(format: "%@\n", lastCalculationLabel.text!) + calculationsHistoryTxtView.text
         
-        currentCalculation.x = currentCalculation.result
+        if currentCalculation.result == Float.infinity {
+            currentCalculation.inputState = .initial
+        }else{
+            currentCalculation.x = currentCalculation.result
+        }
         
     }
     
